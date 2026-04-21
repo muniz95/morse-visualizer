@@ -11,11 +11,10 @@ export const DecodedMorseCharacter = styled.span<{ $active?: boolean }>`
 `;
 
 export const TreeContainer = styled.div`
+  position: relative;
   width: 100%;
   overflow-x: auto;
-  min-width: 1024px;
-  padding: 32px 0;
-  box-sizing: border-box;
+  min-width: 512px;
 `;
 
 const S = { DecodedMorseContainer, DecodedMorseCharacter, TreeContainer };

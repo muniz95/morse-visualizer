@@ -12,7 +12,7 @@ function App() {
 
       <Ticks />
 
-      <section id="morse-visualizer">
+      <section id="morse-visualizer" style={{ display: "flex", alignItems: "center", justifyContent: "center", flexGrow: 1 }}>
         <MorseVisualizer></MorseVisualizer>
       </section>
 
