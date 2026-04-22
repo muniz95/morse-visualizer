@@ -41,25 +41,26 @@ const Svg = styled.svg`
   overflow: visible;
 `;
 
-const Label = styled.span<{ $active?: boolean }>`
+const SignalWrapper = styled.div`
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Label = styled.span<{ $active?: boolean; $dir: "above" | "below" | "left" | "right" }>`
+  position: absolute;
   font-size: 9px;
   font-weight: 600;
   color: ${({ $active }) => ($active ? "var(--accent)" : "var(--text)")};
   transition: color 0.2s ease;
   line-height: 1;
-  flex-shrink: 0;
-`;
-
-const NodeWrapper = styled.div<{ $dir: "above" | "below" | "left" | "right" }>`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 3px;
-  flex-direction: ${({ $dir }) =>
-    $dir === "above" ? "column-reverse" :
-    $dir === "below" ? "column" :
-    $dir === "left"  ? "row-reverse" :
-    "row"};
+  white-space: nowrap;
+  ${({ $dir }) =>
+    $dir === "above" ? "bottom: calc(100% + 3px); left: 50%; transform: translateX(-50%);" :
+    $dir === "below" ? "top: calc(100% + 3px); left: 50%; transform: translateX(-50%);" :
+    $dir === "left"  ? "right: calc(100% + 3px); top: 50%; transform: translateY(-50%);" :
+                       "left: calc(100% + 3px); top: 50%; transform: translateY(-50%);"}
 `;
 
 type LabelPos = "above" | "below" | "left" | "right";
@@ -179,14 +180,14 @@ const MorseVisualizer = () => {
             {node.type === "root" ? (
               <RootIndicator $active={active} />
             ) : (
-              <NodeWrapper $dir={node.labelPos}>
+              <SignalWrapper>
                 {node.type === "long" ? (
                   <LongSignal $active={active} />
                 ) : (
                   <ShortSignal $active={active} />
                 )}
-                <Label $active={active}>{label}</Label>
-              </NodeWrapper>
+                <Label $active={active} $dir={node.labelPos}>{label}</Label>
+              </SignalWrapper>
             )}
           </Cell>
         );
