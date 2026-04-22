@@ -41,42 +41,66 @@ const Svg = styled.svg`
   overflow: visible;
 `;
 
+const Label = styled.span<{ $active?: boolean }>`
+  font-size: 9px;
+  font-weight: 600;
+  color: ${({ $active }) => ($active ? "var(--accent)" : "var(--text)")};
+  transition: color 0.2s ease;
+  line-height: 1;
+  flex-shrink: 0;
+`;
+
+const NodeWrapper = styled.div<{ $dir: "above" | "below" | "left" | "right" }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  flex-direction: ${({ $dir }) =>
+    $dir === "above" ? "column-reverse" :
+    $dir === "below" ? "column" :
+    $dir === "left"  ? "row-reverse" :
+    "row"};
+`;
+
+type LabelPos = "above" | "below" | "left" | "right";
+
 type NodeDef = {
   char: string | null;
   col: number;
   row: number;
   key: number;
   type: "root" | "long" | "short";
+  labelPos: LabelPos;
 };
 
 const NODES: NodeDef[] = [
-  { char: null, col: 3, row: 0,  key: 0,    type: "root"  },
-  { char: "T",  col: 2, row: 0,  key: 1000, type: "long"  },
-  { char: "E",  col: 4, row: 0,  key: 1001, type: "short" },
-  { char: "M",  col: 1, row: 0,  key: 2000, type: "long"  },
-  { char: "N",  col: 2, row: 5,  key: 2001, type: "short" },
-  { char: "A",  col: 4, row: 5,  key: 2002, type: "long"  },
-  { char: "I",  col: 5, row: 0,  key: 2003, type: "short" },
-  { char: "O",  col: 0, row: 0,  key: 3000, type: "long"  },
-  { char: "G",  col: 1, row: 2,  key: 3001, type: "short" },
-  { char: "K",  col: 1, row: 5,  key: 3002, type: "long"  },
-  { char: "D",  col: 2, row: 8,  key: 3003, type: "short" },
-  { char: "W",  col: 4, row: 8,  key: 3004, type: "long"  },
-  { char: "R",  col: 5, row: 5,  key: 3005, type: "short" },
-  { char: "U",  col: 5, row: 2,  key: 3006, type: "long"  },
-  { char: "S",  col: 6, row: 0,  key: 3007, type: "short" },
-  { char: "Q",  col: 0, row: 2,  key: 4002, type: "long"  },
-  { char: "Z",  col: 1, row: 4,  key: 4003, type: "short" },
-  { char: "Y",  col: 0, row: 5,  key: 4004, type: "long"  },
-  { char: "C",  col: 1, row: 7,  key: 4005, type: "short" },
-  { char: "X",  col: 1, row: 8,  key: 4006, type: "long"  },
-  { char: "B",  col: 2, row: 10, key: 4007, type: "short" },
-  { char: "J",  col: 4, row: 10, key: 4008, type: "long"  },
-  { char: "P",  col: 5, row: 8,  key: 4009, type: "short" },
-  { char: "L",  col: 6, row: 5,  key: 4011, type: "short" },
-  { char: "F",  col: 6, row: 4,  key: 4013, type: "short" },
-  { char: "V",  col: 6, row: 2,  key: 4014, type: "long"  },
-  { char: "H",  col: 7, row: 0,  key: 4015, type: "short" },
+  { char: null, col: 3, row: 0,  key: 0,    type: "root",  labelPos: "above" },
+  { char: "T",  col: 2, row: 0,  key: 1000, type: "long",  labelPos: "above" },
+  { char: "E",  col: 4, row: 0,  key: 1001, type: "short", labelPos: "above" },
+  { char: "M",  col: 1, row: 0,  key: 2000, type: "long",  labelPos: "above" },
+  { char: "N",  col: 2, row: 5,  key: 2001, type: "short", labelPos: "right" },
+  { char: "A",  col: 4, row: 5,  key: 2002, type: "long",  labelPos: "left"  },
+  { char: "I",  col: 5, row: 0,  key: 2003, type: "short", labelPos: "above" },
+  { char: "O",  col: 0, row: 0,  key: 3000, type: "long",  labelPos: "above" },
+  { char: "G",  col: 1, row: 2,  key: 3001, type: "short", labelPos: "right" },
+  { char: "K",  col: 1, row: 5,  key: 3002, type: "long",  labelPos: "above" },
+  { char: "D",  col: 2, row: 8,  key: 3003, type: "short", labelPos: "right" },
+  { char: "W",  col: 4, row: 8,  key: 3004, type: "long",  labelPos: "left"  },
+  { char: "R",  col: 5, row: 5,  key: 3005, type: "short", labelPos: "below" },
+  { char: "U",  col: 5, row: 2,  key: 3006, type: "long",  labelPos: "left"  },
+  { char: "S",  col: 6, row: 0,  key: 3007, type: "short", labelPos: "above" },
+  { char: "Q",  col: 0, row: 2,  key: 4002, type: "long",  labelPos: "below" },
+  { char: "Z",  col: 1, row: 4,  key: 4003, type: "short", labelPos: "right" },
+  { char: "Y",  col: 0, row: 5,  key: 4004, type: "long",  labelPos: "above" },
+  { char: "C",  col: 1, row: 7,  key: 4005, type: "short", labelPos: "right" },
+  { char: "X",  col: 1, row: 8,  key: 4006, type: "long",  labelPos: "left"  },
+  { char: "B",  col: 2, row: 10, key: 4007, type: "short", labelPos: "below" },
+  { char: "J",  col: 4, row: 10, key: 4008, type: "long",  labelPos: "right" },
+  { char: "P",  col: 5, row: 8,  key: 4009, type: "short", labelPos: "right" },
+  { char: "L",  col: 6, row: 5,  key: 4011, type: "short", labelPos: "right" },
+  { char: "F",  col: 6, row: 4,  key: 4013, type: "short", labelPos: "right" },
+  { char: "V",  col: 6, row: 2,  key: 4014, type: "long",  labelPos: "right" },
+  { char: "H",  col: 7, row: 0,  key: 4015, type: "short", labelPos: "above" },
 ];
 
 // [col1, row1, col2, row2, keyA, keyB]
@@ -154,10 +178,15 @@ const MorseVisualizer = () => {
           <Cell key={node.key} $col={node.col} $row={node.row}>
             {node.type === "root" ? (
               <RootIndicator $active={active} />
-            ) : node.type === "long" ? (
-              <LongSignal $content={label} $active={active} />
             ) : (
-              <ShortSignal $content={label} $active={active} />
+              <NodeWrapper $dir={node.labelPos}>
+                {node.type === "long" ? (
+                  <LongSignal $active={active} />
+                ) : (
+                  <ShortSignal $active={active} />
+                )}
+                <Label $active={active}>{label}</Label>
+              </NodeWrapper>
             )}
           </Cell>
         );
