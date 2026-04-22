@@ -4,8 +4,8 @@ const LongSignal = styled.span<{ $content: string; $active?: boolean }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 20px;
+  width: 33px;
+  height: 15px;
   border-radius: 4px;
   border: 2px solid ${({ $active }) => ($active ? "var(--accent)" : "var(--border)")};
   flex-shrink: 0;
