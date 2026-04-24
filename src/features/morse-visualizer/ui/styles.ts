@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-export const COLS = 8;
+export const COLS = 9;
 export const ROWS = 11;
-export const CELL = 50;
+export const CELL = 44;
 
 export const TreeContainer = styled.div`
   position: relative;
