@@ -1,67 +1,7 @@
-import styled from "styled-components";
 import { useMorseVisualizer } from "../hooks/use-morse-visualizer";
 import LongSignal from "./components/long-signal";
 import ShortSignal from "./components/short-signal";
-
-const COLS = 8;
-const ROWS = 11;
-const CELL = 50;
-
-const Grid = styled.div`
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(${COLS}, ${CELL}px);
-  grid-template-rows: repeat(${ROWS}, ${CELL}px);
-  width: ${COLS * CELL}px;
-  margin: 0 auto;
-`;
-
-const Cell = styled.div<{ $col: number; $row: number }>`
-  grid-column: ${({ $col }) => $col + 1};
-  grid-row: ${({ $row }) => $row + 1};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const RootIndicator = styled.div<{ $active?: boolean }>`
-  width: 0;
-  height: 0;
-  border-left: 9px solid transparent;
-  border-right: 9px solid transparent;
-  border-top: 19px solid ${({ $active }) => ($active ? "var(--accent)" : "var(--border)")};
-  filter: ${({ $active }) => ($active ? "drop-shadow(0 0 6px var(--accent))" : "none")};
-  transition: border-top-color 0.2s ease, filter 0.2s ease;
-`;
-
-const Svg = styled.svg`
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: visible;
-`;
-
-const SignalWrapper = styled.div`
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Label = styled.span<{ $active?: boolean; $dir: "above" | "below" | "left" | "right" }>`
-  position: absolute;
-  font-size: 9px;
-  font-weight: 600;
-  color: ${({ $active }) => ($active ? "var(--accent)" : "var(--text)")};
-  transition: color 0.2s ease;
-  line-height: 1;
-  white-space: nowrap;
-  ${({ $dir }) =>
-    $dir === "above" ? "bottom: calc(100% + 3px); left: 50%; transform: translateX(-50%);" :
-    $dir === "below" ? "top: calc(100% + 3px); left: 50%; transform: translateX(-50%);" :
-    $dir === "left"  ? "right: calc(100% + 3px); top: 50%; transform: translateY(-50%);" :
-                       "left: calc(100% + 3px); top: 50%; transform: translateY(-50%);"}
-`;
+import S, {CELL, COLS, ROWS} from "./styles"
 
 type LabelPos = "above" | "below" | "left" | "right";
 
@@ -151,8 +91,8 @@ const MorseVisualizer = () => {
   const { activeMap } = useMorseVisualizer();
 
   return (
-    <Grid>
-      <Svg
+    <S.Grid>
+      <S.Svg
         width={COLS * CELL}
         height={ROWS * CELL}
         viewBox={`0 0 ${COLS * CELL} ${ROWS * CELL}`}
@@ -171,28 +111,28 @@ const MorseVisualizer = () => {
             />
           );
         })}
-      </Svg>
+      </S.Svg>
       {NODES.map((node) => {
         const active = activeMap.get(node.key) ?? false;
         const label = node.char ?? "";
         return (
-          <Cell key={node.key} $col={node.col} $row={node.row}>
+          <S.Cell key={node.key} $col={node.col} $row={node.row}>
             {node.type === "root" ? (
-              <RootIndicator $active={active} />
+              <S.RootIndicator $active={active} />
             ) : (
-              <SignalWrapper>
+              <S.SignalWrapper>
                 {node.type === "long" ? (
                   <LongSignal $active={active} />
                 ) : (
                   <ShortSignal $active={active} />
                 )}
-                <Label $active={active} $dir={node.labelPos}>{label}</Label>
-              </SignalWrapper>
+                <S.Label $active={active} $dir={node.labelPos}>{label}</S.Label>
+              </S.SignalWrapper>
             )}
-          </Cell>
+          </S.Cell>
         );
       })}
-    </Grid>
+    </S.Grid>
   );
 };
 
