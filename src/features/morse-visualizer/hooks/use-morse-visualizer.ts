@@ -21,11 +21,12 @@ export const useMorseVisualizer = () => {
   const currentIndex = useAppStore((state) => state.currentIndex);
   const currentChar = useAppStore((state) => state.currentChar);
   const currentSignalIndex = useAppStore((state) => state.currentSignalIndex);
+  const isCharDone = useAppStore((state) => state.isCharDone);
   const sentence = formatSentence(morseInput).split("");
   const morseSequence = sentence.map((char) => dictionary[char]);
 
   const activePath: MorseCodeElement[] =
-    currentChar && dictionary[currentChar]
+    !isCharDone && currentChar && dictionary[currentChar]
       ? dictionary[currentChar].slice(0, currentSignalIndex + 1)
       : [];
 
