@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { dictionary } from "./constants";
 import { formatSentence } from "./utils";
+import { playTone } from "./lib/sound";
 
 interface State {
   morseInput: string;
@@ -32,8 +33,10 @@ export const useAppStore = create<State>((set, get) => ({
       set({ currentIndex: charIdx, currentChar: char, currentSignalIndex: -1 });
       const signals = dictionary[char] ?? [];
       for (let sigIdx = 0; sigIdx < signals.length; sigIdx++) {
+        const signal = signals[sigIdx];
         set({ currentSignalIndex: sigIdx });
-        await new Promise((resolve) => setTimeout(resolve, 800));
+        await playTone(signal === "long_signal" ? 300 : 100);
+        await new Promise((resolve) => setTimeout(resolve, 100));
       }
       await new Promise((resolve) => setTimeout(resolve, 500));
     }
