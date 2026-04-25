@@ -1,1 +1,1 @@
-export const formatSentence = (sentence: string) => sentence.trim().replace(/\. /g, '.');
+export const formatSentence = (sentence: string) => sentence.toLowerCase().trim().replace(/\. /g, '.');

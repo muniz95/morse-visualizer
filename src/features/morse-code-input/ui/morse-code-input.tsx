@@ -9,7 +9,7 @@ const MorseCodeInput = () => {
   const speed = useAppStore((state) => state.speed);
   return (
     <S.MorseCodeInputContainer>
-      <div>
+      <S.DivBlock>
         <input
           type="text"
           id="morse-code-input"
@@ -17,19 +17,22 @@ const MorseCodeInput = () => {
           value={input}
         ></input>
         <S.MorseCodePlayButton onClick={play}>&#11208;</S.MorseCodePlayButton>
-      </div>
-      <div>
+      </S.DivBlock>
+      <S.DivBlock>
         <input
           type="range"
           name="speed"
           min={10}
           max={300}
+          step={10}
           defaultValue={100}
           id="speed"
           value={speed}
+          title='Speed'
           onChange={({ target }) => setSpeed(target.valueAsNumber)}
         />
-      </div>
+        <label htmlFor="speed">{speed}%</label>
+      </S.DivBlock>
     </S.MorseCodeInputContainer>
   );
 };

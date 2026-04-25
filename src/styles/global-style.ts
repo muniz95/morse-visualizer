@@ -63,6 +63,7 @@ const GlobalStyle = createGlobalStyle`
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
+    padding: 10px;
   }
 
   body {
