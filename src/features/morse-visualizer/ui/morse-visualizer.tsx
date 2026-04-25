@@ -1,4 +1,4 @@
-import { useMorseVisualizer } from "../hooks/use-morse-visualizer";
+import { useMorseVisualizer } from "@/features/morse-visualizer/hooks/use-morse-visualizer";
 import LongSignal from "./components/long-signal";
 import ShortSignal from "./components/short-signal";
 import S, {CELL, COLS, ROWS} from "./styles"

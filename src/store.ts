@@ -1,7 +1,7 @@
 import { create } from "zustand";
-import { dictionary } from "./constants";
-import { formatSentence } from "./utils";
-import { playTone } from "./lib/sound";
+import { dictionary } from "@/constants";
+import { formatSentence } from "@/utils";
+import { playTone } from "@/lib/sound";
 
 interface State {
   morseInput: string;

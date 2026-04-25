@@ -1,4 +1,4 @@
-import { dictionary } from "../../../constants";
+import { dictionary } from "@/constants";
 
 export interface MorseTreeNode {
   char: string | null;

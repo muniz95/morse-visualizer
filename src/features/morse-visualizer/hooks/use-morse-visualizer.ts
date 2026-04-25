@@ -1,7 +1,7 @@
-import { dictionary } from "../../../constants";
-import type { MorseCodeElement } from "../../../constants";
-import { useAppStore } from "../../../store";
-import { formatSentence } from "../../../utils";
+import { dictionary } from "@/constants";
+import type { MorseCodeElement } from "@/constants";
+import { useAppStore } from "@/store";
+import { formatSentence } from "@/utils";
 
 // key = depth * 1000 + position within the full tree
 function buildActiveMap(activePath: MorseCodeElement[]): Map<number, boolean> {

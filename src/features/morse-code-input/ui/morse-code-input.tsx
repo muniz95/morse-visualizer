@@ -1,5 +1,5 @@
-import { useAppStore } from "../../../store";
-import S from "../styles";
+import S from "@/features/morse-code-input/styles";
+import { useAppStore } from "@/store";
 
 const MorseCodeInput = () => {
   const input = useAppStore((state) => state.morseInput);
