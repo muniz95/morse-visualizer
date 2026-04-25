@@ -7,6 +7,13 @@ const MorseCodeInputContainer = styled.div`
   flex-flow: column;
 `;
 
-const S = { MorseCodeInputContainer };
+const MorseCodePlayButton = styled.button`
+  width: 48px;
+  height: 36px;
+  border-radius: 15%;
+  border-style: none;
+`;
+
+const S = { MorseCodeInputContainer, MorseCodePlayButton };
 
 export default S;
